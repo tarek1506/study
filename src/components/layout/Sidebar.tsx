@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, BookOpen, TrendingUp, LogOut,
-  GraduationCap, ChevronLeft, ChevronRight, User,
+  GraduationCap, ChevronLeft, ChevronRight, X,
 } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
@@ -15,7 +15,11 @@ const NAV = [
   { to: '/progress', icon: TrendingUp,      label: 'Progress'  },
 ]
 
-export function Sidebar() {
+interface SidebarProps {
+  onClose?: () => void
+}
+
+export function Sidebar({ onClose }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
   const navigate = useNavigate()
   const { user } = useAuth()
@@ -59,6 +63,20 @@ export function Sidebar() {
         'flex shrink-0 items-center gap-3 overflow-hidden',
         collapsed ? 'justify-center px-0 py-5' : 'px-5 py-5'
       )}>
+        {/* Mobile close button — only shown when rendered as a drawer (via onClose) */}
+        {onClose && (
+          <button
+            onClick={onClose}
+            aria-label="Close menu"
+            className={cn(
+              'absolute right-3 top-4 flex h-7 w-7 items-center justify-center rounded-full',
+              'text-[hsl(var(--text-tertiary))] hover:bg-[hsl(0_0%_93%)] hover:text-[hsl(var(--text-primary))]',
+              'transition-colors duration-150 lg:hidden'
+            )}
+          >
+            <X className="h-4 w-4" strokeWidth={2} />
+          </button>
+        )}
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[hsl(var(--accent))]">
           <GraduationCap className="h-[18px] w-[18px] text-white" strokeWidth={2} />
         </div>

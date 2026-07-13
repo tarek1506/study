@@ -1,9 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Search, Bell } from 'lucide-react'
+import { Search, Bell, Menu } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { ProfileAvatar } from '@/components/profile/ProfileAvatar'
 import { useProfile } from '@/hooks/useProfile'
+import { cn } from '@/lib/utils'
 import type { NotificationItem } from '@/lib/notifications'
 
 const TITLES: Record<string, { title: string; sub: string }> = {
@@ -29,7 +30,11 @@ function formatRelativeTime(date: Date) {
   return new Date(date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
 }
 
-export function TopBar() {
+interface TopBarProps {
+  onMenuToggle?: () => void
+}
+
+export function TopBar({ onMenuToggle }: TopBarProps) {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const { user } = useAuth()
@@ -61,16 +66,35 @@ export function TopBar() {
   }
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between gap-4 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--bg-elevated))] px-6">
+    <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between gap-4 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--bg-elevated))] px-4 sm:px-6">
 
-      {/* Left — page title */}
-      <div className="min-w-0">
-        <h2 className="text-sm font-bold leading-none text-[hsl(var(--text-primary))] truncate">
-          {title}
-        </h2>
-        {sub && (
-          <p className="mt-0.5 text-[11px] text-[hsl(var(--text-tertiary))] truncate">{sub}</p>
+      {/* Left — hamburger (mobile) + page title */}
+      <div className="flex items-center gap-3 min-w-0">
+        {/* Mobile hamburger — only shown on small screens */}
+        {onMenuToggle && (
+          <button
+            onClick={onMenuToggle}
+            aria-label="Open menu"
+            className={cn(
+              'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
+              'border border-[hsl(var(--border-subtle))] bg-[hsl(var(--bg-page))]',
+              'text-[hsl(var(--text-secondary))] hover:border-[hsl(var(--accent))] hover:text-[hsl(var(--accent))]',
+              'transition-all duration-150 lg:hidden'
+            )}
+          >
+            <Menu className="h-4 w-4" strokeWidth={1.75} />
+          </button>
         )}
+
+        {/* Page title */}
+        <div className="min-w-0">
+          <h2 className="text-sm font-bold leading-none text-[hsl(var(--text-primary))] truncate">
+            {title}
+          </h2>
+          {sub && (
+            <p className="mt-0.5 text-[11px] text-[hsl(var(--text-tertiary))] truncate">{sub}</p>
+          )}
+        </div>
       </div>
 
       {/* Right — search + actions */}

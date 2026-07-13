@@ -105,10 +105,10 @@ export function Courses({ user }: CoursesProps) {
     <div className="space-y-5 max-w-[1100px] mx-auto">
 
       {/* Header action */}
-      <div className="flex items-center justify-between">
-        {/* Drag hint */}
+      <div className="flex items-center justify-between gap-3">
+        {/* Drag hint — hidden on small screens */}
         {isDragEnabled && courses.length > 1 && (
-          <p className="flex items-center gap-1.5 text-[11px] text-[hsl(var(--text-tertiary))]">
+          <p className="hidden md:flex items-center gap-1.5 text-[11px] text-[hsl(var(--text-tertiary))]">
             <GripVertical className="h-3.5 w-3.5" strokeWidth={2} />
             Drag cards to reorder
           </p>
@@ -116,7 +116,7 @@ export function Courses({ user }: CoursesProps) {
         <div className="ml-auto">
           <Button variant="accent" onClick={() => setOpen(true)}>
             <Plus className="h-4 w-4" strokeWidth={2.5} />
-            Add Course
+            <span className="hidden xs:inline">Add Course</span>
           </Button>
         </div>
       </div>
@@ -155,7 +155,7 @@ export function Courses({ user }: CoursesProps) {
         </div>
 
         {/* View toggle */}
-        <div className="flex items-center rounded-full border border-[hsl(var(--border-subtle))] bg-[hsl(var(--bg-elevated))] p-1 gap-0.5 ml-auto">
+        <div className="flex items-center rounded-full border border-[hsl(var(--border-subtle))] bg-[hsl(var(--bg-elevated))] p-1 gap-0.5">
           {(['grid', 'list'] as const).map((v) => (
             <button
               key={v}

@@ -36,7 +36,7 @@ export function Dashboard({ user }: DashboardProps) {
     <div className="space-y-6 max-w-[1100px] mx-auto">
 
       {/* ── Greeting banner ──────────────────────── */}
-      <div className="flex items-center justify-between rounded-[20px] border border-[hsl(var(--border-subtle))] bg-[hsl(var(--bg-elevated))] px-6 py-4 shadow-card">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-[20px] border border-[hsl(var(--border-subtle))] bg-[hsl(var(--bg-elevated))] px-6 py-4 shadow-card">
         <div>
           <p className="text-[11px] font-medium uppercase tracking-widest text-[hsl(var(--text-tertiary))]">
             {format(new Date(), 'EEEE, MMMM d')}
