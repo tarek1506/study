@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Core Surfaces ────────────────────────────── */
+    --bg-page:    240 0% 94%;   /* #F0F0F0 */
+    --bg-surface: 0 0% 98%;     /* #FAFAFA */
+    --bg-elevated: 0 0% 100%;   /* #FFFFFF */
+
+    /* ── Accent ───────────────────────────────────── */
+    --accent:      18 77% 60%;  /* #E8734A coral */
+    --accent-soft: 18 85% 90%;  /* #FBD9CC */
+
+    /* ── Text ─────────────────────────────────────── */
+    --text-primary:   0 0% 10%;  /* #1A1A1A */
+    --text-secondary: 0 0% 55%;  /* #8C8C8C */
+    --text-tertiary:  0 0% 70%;  /* #B3B3B3 */
+
+    /* ── Dark fill (primary button) ───────────────── */
+    --dark-fill: 0 0% 10%;       /* #1A1A1A */
+
+    /* ── Border ───────────────────────────────────── */
+    --border-subtle: 0 0% 90%;  /* #E5E5E5 */
+
+    /* ── Shadcn compat aliases ────────────────────── */
+    --background:         var(--bg-page);
+    --foreground:         var(--text-primary);
+    --card:               var(--bg-elevated);
+    --card-foreground:    var(--text-primary);
+    --popover:            var(--bg-elevated);
+    --popover-foreground: var(--text-primary);
+    --primary:            var(--accent);
+    --primary-foreground: 0 0% 100%;
+    --secondary:          0 0% 96%;
+    --secondary-foreground: var(--text-primary);
+    --muted:              0 0% 96%;
+    --muted-foreground:   var(--text-secondary);
+    --accent-ui:          var(--accent-soft);
+    --accent-foreground:  var(--text-primary);
+    --destructive:        0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border:             var(--border-subtle);
+    --input:              0 0% 96%;
+    --ring:               var(--accent);
+    --radius:             1.25rem;   /* 20px default */
+  }
+}
+
+@layer base {
+  * { @apply border-border box-border; }
+
+  html { color-scheme: light; }
+
+  body {
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+    background-color: hsl(var(--bg-page));
+    color: hsl(var(--text-primary));
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: hsl(var(--text-primary));
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ── Custom utilities ──────────────────────────────── */
+@layer utilities {
+  /* Surface cards */
+  .card-surface {
+    background: hsl(var(--bg-elevated));
+    border: 1px solid hsl(var(--border-subtle));
+    border-radius: 20px;
+  }
+  .card-surface-hover {
+    @apply card-surface transition-all duration-200;
+  }
+  .card-surface-hover:hover {
+    border-color: hsl(var(--accent) / 0.3);
+    box-shadow: 0 2px 12px hsl(var(--accent) / 0.08);
+    transform: translateY(-1px);
+  }
+
+  /* Accent pill button */
+  .btn-accent {
+    background: hsl(var(--accent));
+    color: #fff;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .btn-accent:hover {
+    background: hsl(18 77% 53%);
+    transform: translateY(-1px);
+  }
+
+  /* Dark pill button */
+  .btn-dark {
+    background: hsl(var(--dark-fill));
+    color: #fff;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: background 0.15s;
+  }
+  .btn-dark:hover { background: hsl(0 0% 20%); }
+
+  /* Circular icon container */
+  .icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+
+  /* Text helpers */
+  .text-accent { color: hsl(var(--accent)); }
+  .bg-accent-soft { background: hsl(var(--accent-soft)); }
+
+  /* Scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border-subtle)) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 5px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--border-subtle));
+    border-radius: 3px;
+  }
+
+  /* Fade-in page animation */
+  .page-enter { animation: fade-up 0.28s ease-out both; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Recharts overrides */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: hsl(var(--border-subtle));
+}
